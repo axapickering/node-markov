@@ -1,3 +1,5 @@
+"use strict";
+const _ = require("lodash");
 /** Textual markov chain generator. */
 
 
@@ -15,7 +17,7 @@ class MarkovMachine {
   /** Get markov chain: returns object of Markov chains.
    *
    *  For text of "The cat in the hat.", chains will be:
-   * 
+   *
    *  {
    *   "The": ["cat"],
    *   "cat": ["in"],
@@ -23,11 +25,28 @@ class MarkovMachine {
    *   "the": ["hat."],
    *   "hat.": [null],
    *  }
-   * 
+   *
    * */
 
   getChains() {
-    // TODO: implement this!
+      const words = this.words;
+      const chains = {};
+
+      for (let index = 0;index < words.length;index++) {
+
+        let nextWord = words[index+1] || null;
+
+        if (!([words[index]] in chains)) {
+
+          chains[words[index]] = [nextWord];
+
+        } else {
+
+          chains[words[index]].push(nextWord);
+      }
+    }
+
+      return chains;
   }
 
 
@@ -35,10 +54,25 @@ class MarkovMachine {
    *  until it hits a null choice. */
 
   getText() {
-    // TODO: implement this!
 
     // - start at the first word in the input text
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
+
+    let word = this.words[0];
+    let textArray = []; // use array?
+    let nextWord;
+    while (word !== null) {
+      console.log(word)
+      console.log("t_a",textArray)
+        textArray.push(word);
+        nextWord = _.sample(this.chains[word]);
+        word = nextWord;
+    }
+
+    return textArray.join(" ");
   }
+
 }
+
+module.exports = { MarkovMachine }
