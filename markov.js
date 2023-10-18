@@ -64,7 +64,6 @@ class MarkovMachine {
     let nextWord;
     while (word !== null) {
       console.log(word)
-      console.log("t_a",textArray)
         textArray.push(word);
         nextWord = _.sample(this.chains[word]);
         word = nextWord;

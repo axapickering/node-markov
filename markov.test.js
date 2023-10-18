@@ -30,4 +30,10 @@ describe("test getText", function () {
   test("test if the text generated is a string", function () {
     expect(markovMachine.getText()).toEqual(expect.any(String));
   });
+
+  test("checks that getText() is different from input string", function () {
+    expect(text).not.toBe(markovMachine.getText());
+  })
+
+
 });
